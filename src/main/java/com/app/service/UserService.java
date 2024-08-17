@@ -5,7 +5,6 @@ import java.util.Optional;
 
 import com.app.dto.AuthDTO;
 import com.app.dto.UserDTO;
-import com.app.dto.UserRespDTO;
 
 public interface UserService {
 	UserDTO authenticateUser(AuthDTO dto);

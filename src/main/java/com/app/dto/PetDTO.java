@@ -33,7 +33,7 @@ public class PetDTO {
     private Integer age;
 
     @NotNull(message = "User ID cannot be null")
-    private Integer userId;
+    private Integer id;
 
     @JsonProperty(access=Access.READ_ONLY)
     private LocalDate upDatedOn;

@@ -1,9 +1,11 @@
 package com.app.dto;
 import java.time.LocalDate;
+import java.util.List;
 
 import javax.validation.constraints.NotNull;
 
 import com.app.entityutils.BookingStatus;
+import com.app.entityutils.PetServices;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -28,8 +30,8 @@ public class BookingDTO {
     @NotNull(message = "Pet ID cannot be null")
     private Integer petId;
     
-    @NotNull
-    private Integer petServiceId;
+  
+    private List<PetServices> services;
     
 //
 //    private List<PetServicesEntity> services;

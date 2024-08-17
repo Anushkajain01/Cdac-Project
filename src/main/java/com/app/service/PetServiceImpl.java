@@ -32,14 +32,14 @@ public class PetServiceImpl implements PetService {
     @Override
     public PetDTO createPet(PetDTO petDTO) {
         Pet pet = modelMapper.map(petDTO, Pet.class);
-        Optional<User> user =  UserRepo.findById(petDTO.getUserId());
+        Optional<User> user =  UserRepo.findById(petDTO.getId());
         if (user.isPresent()) {
             pet.setUser(user.get());
             pet.setCreationDate(LocalDate.now());
             Pet savedPet = PetRepo.save(pet);
             return modelMapper.map(savedPet, PetDTO.class);
         } else {
-            throw new RuntimeException("User not found with id " + petDTO.getUserId());
+            throw new RuntimeException("User not found with id " + petDTO.getId());
         }
     }
 
@@ -79,4 +79,12 @@ public class PetServiceImpl implements PetService {
             throw new RuntimeException("Pet not found with id " + id);
         }
     }
+
+	@Override
+	public Optional<PetDTO> getPetByName(String name) {
+		// TODO Auto-generated method stub
+		return PetRepo.findByPetName(name)
+                .map(pet -> modelMapper.map(pet, PetDTO.class));
+		
+	}
 }

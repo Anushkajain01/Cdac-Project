@@ -4,8 +4,9 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.CascadeType;
+import javax.persistence.CollectionTable;
 import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -14,10 +15,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.app.entityutils.BookingStatus;
+import com.app.entityutils.PetServices;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -48,20 +49,12 @@ public class Booking {
     @ManyToOne
     @JoinColumn(name = "pet_id", nullable = false)
     private Pet pet;
-
-    @OneToMany(mappedBy = "booking", cascade = CascadeType.ALL)
-    private List<PetServicesEntity> services = new ArrayList<>();
+    
+    @ElementCollection(targetClass = PetServices.class)
+    @Enumerated(EnumType.STRING)
+    @CollectionTable(name = "booking_services", joinColumns = @JoinColumn(name = "booking_id"))
+    @Column(name = "service_name")
+    private List<PetServices> services = new ArrayList<>();
 
     // Getters and Setters
-
-   
-
-    public List<PetServicesEntity> getServices() {
-        return services;
-    }
-
-    public void setServices(List<PetServicesEntity> services) {
-        this.services = services;
-    }
-    
 }

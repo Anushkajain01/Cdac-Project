@@ -8,12 +8,12 @@ import javax.transaction.Transactional;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.app.custom_exceptions.InvalidCredentialsException;
 import com.app.dto.AuthDTO;
 import com.app.dto.UserDTO;
-import com.app.dto.UserRespDTO;
 import com.app.entities.User;
 import com.app.repository.UserRepo;
 
@@ -27,14 +27,16 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private ModelMapper modelMapper;
+    @Autowired
+	private PasswordEncoder encoder;
     
     @Override
 	public UserDTO authenticateUser(AuthDTO dto) {
 		// 1. pass em n pass to repo's method
 		User user = UserRepo.
-		findByEmailAndPassword(dto.getUsername(), dto.getPassword())
+		findByEmailAndPassword(dto.getEmail(), dto.getPassword())
 				.orElseThrow(() -> 
-				new InvalidCredentialsException("Invalid email or password !!!"));
+				new BadCredentialsException("Invalid email or password !!!"));
 		//map entity -> DTO
 		return modelMapper.map(user, UserDTO.class);
 	}
@@ -43,6 +45,7 @@ public class UserServiceImpl implements UserService {
     public UserDTO createUser(UserDTO userDTO) {
         User user = modelMapper.map(userDTO, User.class);
         user.setCreationDate(java.time.LocalDate.now());
+        user.setPassword(encoder.encode(user.getPassword()));//pwd : encrypted using SHA
         User savedUser = UserRepo.save(user);
         return modelMapper.map(savedUser, UserDTO.class);
     }

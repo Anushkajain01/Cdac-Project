@@ -53,8 +53,8 @@ public class User {
     @NotNull
     private String address;
 
-    @NotNull
-    private String role;
+    
+    private Role role;
 
     @NotNull
     private LocalDate creationDate;
@@ -62,7 +62,7 @@ public class User {
 	public User() {
 		super();
 		this.setCreationDate(LocalDate.now());
-		this.setRole("user");
+		this.role=Role.ROLE_USER;
 	}
 	
 

@@ -16,4 +16,6 @@ public interface PetService {
 
     void deletePet(Integer id);
 
+	Optional<PetDTO> getPetByName(String name);
+
 }

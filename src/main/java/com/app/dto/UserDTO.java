@@ -1,8 +1,10 @@
 package com.app.dto;
-import javax.validation.constraints.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonProperty.Access;
+import com.app.entities.Role;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -41,9 +43,7 @@ public class UserDTO {
     @NotNull(message = "Address cannot be null")
     private String address;
     
-    @JsonProperty(access=Access.READ_ONLY)
-    @NotNull(message = "Role cannot be null")
-    private String role;
+    private Role role;
 
     
     

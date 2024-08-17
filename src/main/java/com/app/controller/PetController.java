@@ -22,9 +22,9 @@ public class PetController {
         return ResponseEntity.ok(createdPet);
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<Optional<PetDTO>> getPetById(@PathVariable Integer id) {
-        Optional<PetDTO> pet = petService.getPetById(id);
+    @GetMapping("/{name}")
+    public ResponseEntity<Optional<PetDTO>> getPetById(@PathVariable String name) {
+        Optional<PetDTO> pet = petService.getPetByName(name);
         return ResponseEntity.ok(pet);
     }
 
